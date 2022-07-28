@@ -26,11 +26,15 @@ public class CustomerController {
 	}
 	@DeleteMapping("/customers/{id}")
 	public ResponseEntity<Customer> deleteCustomer(@PathVariable String id){
-		repository.deleteById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		if (repository.existsById(id)){
+			repository.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	@PostMapping("/customers")
-	public Customer createCustomer(@RequestBody Customer customer){
-		return repository.save(customer);
-	}
+	public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer){
+		return new ResponseEntity<>(repository.save(customer),HttpStatus.CREATED);	}
 }

@@ -11,11 +11,11 @@ public class Order {
 	@Column(name = "OrderID", nullable = false)
 	private Integer id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CustomerID")
 	private Customer customerID;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "EmployeeID")
 	private Employee employeeID;
 
@@ -28,7 +28,7 @@ public class Order {
 	@Column(name = "ShippedDate")
 	private Instant shippedDate;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ShipVia")
 	private Shipper shipVia;
 
