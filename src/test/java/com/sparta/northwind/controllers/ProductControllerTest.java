@@ -17,12 +17,10 @@ class ProductControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         try {
             Product result = mapper.readValue(new URL("http://localhost:8080/products/1"), Product.class);
-            Assertions.assertNotEquals(0, result.getProductName().length());
+            Assertions.assertNotNull(result);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
 }
