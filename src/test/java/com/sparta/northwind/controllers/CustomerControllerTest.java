@@ -81,9 +81,9 @@ class CustomerControllerTest {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } catch (URISyntaxException e) {
+        } /*catch (URISyntaxException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 
 }
