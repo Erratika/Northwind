@@ -17,7 +17,7 @@ class CustomerControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         try {
             Customer result = mapper.readValue(
-                    new URL("http://localhost:8080/customers/1"),Customer.class);
+                    new URL("http://localhost:8080/customers/ALFKI"),Customer.class);
             Assertions.assertNotEquals(0, result.getPhone());
         } catch (IOException e) {
             throw new RuntimeException(e);
