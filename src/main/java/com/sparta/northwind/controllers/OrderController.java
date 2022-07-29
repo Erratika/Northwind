@@ -33,7 +33,6 @@ public class OrderController {
 					order.getShipRegion(),
 					order.getShipPostalCode(),
 					order.getShipCountry()));
-
 		}
 		return orderDtos;
 	}
@@ -63,7 +62,6 @@ public class OrderController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-
 
 
 	@PostMapping("/orders")

@@ -47,7 +47,7 @@ class CustomerControllerTest {
             result.setContactName("Testy McTesterson");
             result.setContactTitle("Testing Lead");
 
-            URL createUrl =  new URL("http://localhost:8080/customers/create");
+            URL createUrl =  new URL("http://localhost:8080/customers/");
             HttpURLConnection conn = (HttpURLConnection) createUrl.openConnection();
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
