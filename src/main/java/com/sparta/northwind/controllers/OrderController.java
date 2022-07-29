@@ -2,6 +2,7 @@ package com.sparta.northwind.controllers;
 
 import com.sparta.northwind.OrderDto;
 import com.sparta.northwind.entities.Employee;
+import com.sparta.northwind.OrderDto;
 import com.sparta.northwind.entities.Order;
 import com.sparta.northwind.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 //TODO Reference to CustomerID, EmployeeID and ShipVia.
 @RestController
 public class OrderController {
@@ -42,7 +42,6 @@ public class OrderController {
 		}
 		return orderDtos;
 	}
-
 	@GetMapping("/orders/{id}")
 	public ResponseEntity<OrderDto> getOrder(@PathVariable int id) {
 		Optional<Order> optionalOrder = repository.findById(id);
@@ -59,7 +58,7 @@ public class OrderController {
 				order.getShipCountry()), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
-	@DeleteMapping("/orders/delete/{id}")
+	@DeleteMapping("/orders/{id}")
 	public ResponseEntity<Order> deleteOrder(@PathVariable int id) {
 		if (repository.existsById(id)){
 			repository.deleteById(id);
@@ -70,14 +69,14 @@ public class OrderController {
 		}
 	}
 
-	@PostMapping("/orders/create")
+
+
+	@PostMapping("/orders")
 	public ResponseEntity<Order> createOrder(@RequestBody Order order) {
 		return new ResponseEntity<>(repository.save(order),HttpStatus.CREATED);
-
-
 	}
 	@PutMapping(value = "/orders/{id}", consumes = {"application/json"})
-	public ResponseEntity<Order> updateEmployee(@PathVariable int id, @RequestBody Order newOrder) {
+	public ResponseEntity<Order> updateOrder(@PathVariable int id, @RequestBody Order newOrder) {
 		Optional<Order> optionalOrder = repository.findById(id);
 
 		if (optionalOrder.isPresent()) {
@@ -91,7 +90,7 @@ public class OrderController {
 	}
 
 	@PatchMapping(value = "/orders/{id}", consumes = {"application/json"})
-	public ResponseEntity<Order> patchEmployee(@PathVariable int id, @RequestBody Map<String, Object> fields) {
+	public ResponseEntity<Order> patchOrder(@PathVariable int id, @RequestBody Map<String, Object> fields) {
 		Optional<Order> optionalOrder = repository.findById(id);
 		if (optionalOrder.isPresent()) {
 			Order order = optionalOrder.get();

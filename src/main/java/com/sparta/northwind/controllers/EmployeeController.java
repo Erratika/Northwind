@@ -1,7 +1,9 @@
 package com.sparta.northwind.controllers;
 
 import com.sparta.northwind.EmployeeDto;
+import com.sparta.northwind.entities.Customer;
 import com.sparta.northwind.entities.Employee;
+import com.sparta.northwind.entities.Order;
 import com.sparta.northwind.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -73,7 +75,7 @@ public class EmployeeController {
 				employee.getSalary()), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
-	@DeleteMapping("/employees/delete/{id}")
+	@DeleteMapping("/employees/{id}")
 	public ResponseEntity<Employee> deleteEmployee(@PathVariable int id) {
 		if (repository.existsById(id)) {
 			repository.deleteById(id);
@@ -83,20 +85,20 @@ public class EmployeeController {
 		}
 	}
 
-	@PostMapping("/employees/create")
+	@PostMapping("/employees")
 	public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
 		return new ResponseEntity<>(repository.save(employee), HttpStatus.CREATED);
 	}
 
 	@PutMapping(value = "/employees/{id}", consumes = {"application/json"})
-	public ResponseEntity<Employee> updateEmployee(@PathVariable int id, @RequestBody Employee newEmployee) {
+	public ResponseEntity<Employee> updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
 		Optional<Employee> optionalEmployee = repository.findById(id);
 
 		if (optionalEmployee.isPresent()) {
-			newEmployee.setId(id);
-			repository.save(newEmployee);
+			employee.setId(id);
+			repository.save(employee);
 
-			return new ResponseEntity<>(newEmployee, HttpStatus.OK);
+			return new ResponseEntity<>(employee, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -125,3 +127,4 @@ public class EmployeeController {
 
 	}
 }
+
