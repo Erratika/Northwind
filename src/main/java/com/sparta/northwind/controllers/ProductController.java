@@ -1,5 +1,6 @@
 package com.sparta.northwind.controllers;
 
+import com.sparta.northwind.entities.Customer;
 import com.sparta.northwind.entities.Product;
 import com.sparta.northwind.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,32 @@ public class ProductController {
 		Optional<Product> optionalProduct = repository.findById(id);
 		return optionalProduct.map(product -> new ResponseEntity<>(product, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
-	@DeleteMapping("/products/delete/{id}")
+	@DeleteMapping("/products/{id}")
 	public ResponseEntity<Product> deleteProduct(@PathVariable int id){
-		repository.deleteById(id);
-		return new ResponseEntity<>(HttpStatus.OK);
+		if (repository.existsById(id)){
+			repository.deleteById(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
-	@PostMapping("/products/create")
-	public Product createProduct(@RequestBody Product product){
-		return repository.save(product);
+	@PostMapping("/products")
+	public ResponseEntity<Product> createProduct(@RequestBody Product product){
+		return new ResponseEntity<>(repository.save(product), HttpStatus.CREATED);
+	}
+
+	@PutMapping(value = "/products/{id}", consumes = {"application/json"})
+	public ResponseEntity<Product> updateEmployee(@PathVariable int id, @RequestBody Product product) {
+		Optional<Product> optionalProduct = repository.findById(id);
+
+		if (optionalProduct.isPresent()) {
+			product.setId(id);
+			repository.save(product);
+
+			return new ResponseEntity<>(product, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
 	}
 }

@@ -1,12 +1,15 @@
 package com.sparta.northwind.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order extends RepresentationModel<Order> {
 	@Id
 	@Column(name = "OrderID", nullable = false)
 	private Integer id;

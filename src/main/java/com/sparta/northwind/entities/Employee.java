@@ -1,11 +1,13 @@
 package com.sparta.northwind.entities;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
 @Table(name = "employees")
-public class Employee {
+public class Employee extends RepresentationModel<Employee> {
 	@Id
 	@Column(name = "EmployeeID", nullable = false)
 	private Integer id;

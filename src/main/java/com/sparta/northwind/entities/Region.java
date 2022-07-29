@@ -1,5 +1,7 @@
 package com.sparta.northwind.entities;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "region")
-public class Region {
+public class Region extends RepresentationModel<Region> {
 	@Id
 	@Column(name = "RegionID", nullable = false)
 	private Integer id;

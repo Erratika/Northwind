@@ -1,10 +1,12 @@
 package com.sparta.northwind.entities;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "customerdemographics")
-public class Customerdemographic {
+public class Customerdemographic extends RepresentationModel<Customerdemographic> {
 	@Id
 	@Column(name = "CustomerTypeID", nullable = false, length = 10)
 	private String id;

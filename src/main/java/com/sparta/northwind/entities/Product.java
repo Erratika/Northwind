@@ -1,11 +1,13 @@
 package com.sparta.northwind.entities;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "products")
-public class Product {
+public class Product extends RepresentationModel<Product> {
 	@Id
 	@Column(name = "ProductID", nullable = false)
 	private Integer id;

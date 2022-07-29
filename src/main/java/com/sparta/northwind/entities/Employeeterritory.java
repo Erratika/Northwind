@@ -1,10 +1,12 @@
 package com.sparta.northwind.entities;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "employeeterritories")
-public class Employeeterritory {
+public class Employeeterritory extends RepresentationModel<Employeeterritory> {
 	@EmbeddedId
 	private EmployeeterritoryId id;
 

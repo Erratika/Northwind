@@ -12,6 +12,8 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -88,27 +90,41 @@ public class OrderController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
 	}
-
-	@PatchMapping(value = "/orders/{id}", consumes = {"application/json"})
-	public ResponseEntity<Order> patchOrder(@PathVariable int id, @RequestBody Map<String, Object> fields) {
-		Optional<Order> optionalOrder = repository.findById(id);
-		if (optionalOrder.isPresent()) {
-			Order order = optionalOrder.get();
-			// Map key is field name, v is value
-			fields.forEach((k, v) -> {
-				// use reflection to get field k on manager and set it to value v
-				Field field = ReflectionUtils.findField(Order.class, k);
-				if (field != null) {
-					field.setAccessible(true);
-					ReflectionUtils.setField(field, order, v);
-				}
-
-			});
-			repository.save(order);
-			return new ResponseEntity<>(order, HttpStatus.OK);
-		}
-
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-	}
+//	GOT TOO COMPLICATED JUST USE POST
+//	@PatchMapping(value = "/orders/{id}", consumes = {"application/json"})
+//	public ResponseEntity<Order> patchOrder(@PathVariable int id, @RequestBody Map<String, Object> fields) {
+//		Optional<Order> optionalOrder = repository.findById(id);
+//		if (optionalOrder.isPresent()) {
+//			Order order = optionalOrder.get();
+//			// Map key is field name, v is value
+//			fields.forEach((k, v) -> {
+//				// use reflection to get field k on manager and set it to value v
+//				Field field = ReflectionUtils.findField(Order.class, k);
+//				if (field != null) {
+//					switch (field.getName()){
+//						case "shippedDate":
+//							order.setShippedDate(Instant.parse((String)v));
+//							break;
+//						case "orderDate":
+//							order.setOrderDate(Instant.parse((String)v));
+//							break;
+//						case "requiredDate":
+//							order.setRequiredDate(Instant.parse((String)v));
+//							break;
+//						case "freight":
+//							order.setFreight(BigDecimal.valueOf((Double) v));
+//							break;
+//						default:
+//							field.setAccessible(true);
+//							ReflectionUtils.setField(field, order, v);
+//					}
+//				}
+//			});
+//			repository.save(order);
+//			return new ResponseEntity<>(order, HttpStatus.OK);
+//		}
+//
+//		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//
+//	}
 }

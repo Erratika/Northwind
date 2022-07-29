@@ -1,6 +1,7 @@
 package com.sparta.northwind.entities;
 
 import org.hibernate.Hibernate;
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -8,7 +9,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class CustomercustomerdemoId implements Serializable {
+public class CustomercustomerdemoId extends RepresentationModel<Customercustomerdemo>  implements Serializable {
 	private static final long serialVersionUID = -7312002673112826201L;
 	@Column(name = "CustomerID", nullable = false, length = 5)
 	private String customerID;

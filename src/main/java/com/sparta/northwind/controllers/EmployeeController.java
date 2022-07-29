@@ -103,28 +103,28 @@ public class EmployeeController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
 	}
-
-	@PatchMapping(value = "/employees/{id}", consumes = {"application/json"})
-	public ResponseEntity<Employee> patchEmployee(@PathVariable int id, @RequestBody Map<String, Object> fields) {
-		Optional<Employee> optionalEmployee = repository.findById(id);
-		if (optionalEmployee.isPresent()) {
-			Employee employee = optionalEmployee.get();
-			// Map key is field name, v is value
-			fields.forEach((k, v) -> {
-				// use reflection to get field k on manager and set it to value v
-				Field field = ReflectionUtils.findField(Employee.class, k);
-				if (field != null) {
-					field.setAccessible(true);
-					ReflectionUtils.setField(field, employee, v);
-				}
-
-			});
-			repository.save(employee);
-			return new ResponseEntity<>(employee, HttpStatus.OK);
-		}
-
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-	}
+//	got too complicated just use post
+//	@PatchMapping(value = "/employees/{id}", consumes = {"application/json"})
+//	public ResponseEntity<Employee> patchEmployee(@PathVariable int id, @RequestBody Map<String, Object> fields) {
+//		Optional<Employee> optionalEmployee = repository.findById(id);
+//		if (optionalEmployee.isPresent()) {
+//			Employee employee = optionalEmployee.get();
+//			// Map key is field name, v is value
+//			fields.forEach((k, v) -> {
+//				// use reflection to get field k on manager and set it to value v
+//				Field field = ReflectionUtils.findField(Employee.class, k);
+//				if (field != null) {
+//					field.setAccessible(true);
+//					ReflectionUtils.setField(field, employee, v);
+//				}
+//
+//			});
+//			repository.save(employee);
+//			return new ResponseEntity<>(employee, HttpStatus.OK);
+//		}
+//
+//		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//
+//	}
 }
 

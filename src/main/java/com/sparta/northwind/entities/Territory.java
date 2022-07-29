@@ -1,10 +1,12 @@
 package com.sparta.northwind.entities;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "territories")
-public class Territory {
+public class Territory extends RepresentationModel<Territory> {
 	@Id
 	@Column(name = "TerritoryID", nullable = false, length = 20)
 	private String id;
