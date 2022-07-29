@@ -1,20 +1,15 @@
 package com.sparta.northwind.controllers;
 
-import com.sparta.northwind.EmployeeDto;
-import com.sparta.northwind.entities.Customer;
+import com.sparta.northwind.dtos.EmployeeDto;
 import com.sparta.northwind.entities.Employee;
-import com.sparta.northwind.entities.Order;
 import com.sparta.northwind.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;

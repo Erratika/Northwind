@@ -1,6 +1,4 @@
-package com.sparta.northwind;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+package com.sparta.northwind.dtos;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

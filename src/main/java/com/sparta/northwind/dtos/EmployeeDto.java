@@ -1,4 +1,4 @@
-package com.sparta.northwind;
+package com.sparta.northwind.dtos;
 
 import java.io.Serializable;
 import java.time.Instant;
