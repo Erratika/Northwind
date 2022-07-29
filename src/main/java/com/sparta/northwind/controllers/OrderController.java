@@ -55,7 +55,7 @@ public class OrderController {
 				order.getShipCountry()), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
-	@DeleteMapping("/orders/{id}")
+	@DeleteMapping("/orders/delete/{id}")
 	public ResponseEntity<Order> deleteOrder(@PathVariable int id) {
 		if (repository.existsById(id)){
 			repository.deleteById(id);
@@ -66,7 +66,7 @@ public class OrderController {
 		}
 	}
 
-	@PostMapping("/orders")
+	@PostMapping("/orders/create")
 	public ResponseEntity<Order> createOrder(@RequestBody Order order) {
 		return new ResponseEntity<>(repository.save(order),HttpStatus.CREATED);
 

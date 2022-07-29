@@ -70,7 +70,7 @@ public class EmployeeController {
 				employee.getSalary()), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
 
-	@DeleteMapping("/employees/{id}")
+	@DeleteMapping("/employees/delete/{id}")
 	public ResponseEntity<Employee> deleteEmployee(@PathVariable int id) {
 		if (repository.existsById(id)) {
 			repository.deleteById(id);
@@ -80,7 +80,7 @@ public class EmployeeController {
 		}
 	}
 
-	@PostMapping("/employees")
+	@PostMapping("/employees/create")
 	public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
 		return new ResponseEntity<>(repository.save(employee), HttpStatus.CREATED);
 	}
