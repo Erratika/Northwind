@@ -1,18 +1,21 @@
 package com.sparta.northwind.controllers;
 
 import com.sparta.northwind.EmployeeDto;
-import com.sparta.northwind.OrderDto;
 import com.sparta.northwind.entities.Employee;
-import com.sparta.northwind.entities.Order;
 import com.sparta.northwind.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
 public class EmployeeController {
@@ -83,5 +86,42 @@ public class EmployeeController {
 	@PostMapping("/employees")
 	public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
 		return new ResponseEntity<>(repository.save(employee), HttpStatus.CREATED);
+	}
+
+	@PutMapping(value = "/employees/{id}", consumes = {"application/json"})
+	public ResponseEntity<Employee> updateEmployee(@PathVariable int id, @RequestBody Employee newEmployee) {
+		Optional<Employee> optionalEmployee = repository.findById(id);
+
+		if (optionalEmployee.isPresent()) {
+			newEmployee.setId(id);
+			repository.save(newEmployee);
+
+			return new ResponseEntity<>(newEmployee, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+	}
+
+	@PatchMapping(value = "/employees/{id}", consumes = {"application/json"})
+	public ResponseEntity<Employee> patchEmployee(@PathVariable int id, @RequestBody Map<String, Object> fields) {
+		Optional<Employee> optionalEmployee = repository.findById(id);
+		if (optionalEmployee.isPresent()) {
+			Employee employee = optionalEmployee.get();
+			// Map key is field name, v is value
+			fields.forEach((k, v) -> {
+				// use reflection to get field k on manager and set it to value v
+				Field field = ReflectionUtils.findField(Employee.class, k);
+				if (field != null) {
+					field.setAccessible(true);
+					ReflectionUtils.setField(field, employee, v);
+				}
+
+			});
+			repository.save(employee);
+			return new ResponseEntity<>(employee, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
 	}
 }

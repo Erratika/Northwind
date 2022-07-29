@@ -56,7 +56,7 @@ public class Employee {
 	@Column(name = "Notes", nullable = false)
 	private String notes;
 
-	@ManyToOne(fetch = FetchType.LAZY )
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ReportsTo")
 	private Employee reportsTo;
 

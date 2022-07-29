@@ -1,15 +1,19 @@
 package com.sparta.northwind.controllers;
 
 import com.sparta.northwind.OrderDto;
+import com.sparta.northwind.entities.Employee;
 import com.sparta.northwind.entities.Order;
 import com.sparta.northwind.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 //TODO Reference to CustomerID, EmployeeID and ShipVia.
@@ -70,6 +74,42 @@ public class OrderController {
 	public ResponseEntity<Order> createOrder(@RequestBody Order order) {
 		return new ResponseEntity<>(repository.save(order),HttpStatus.CREATED);
 
+
+	}
+	@PutMapping(value = "/orders/{id}", consumes = {"application/json"})
+	public ResponseEntity<Order> updateEmployee(@PathVariable int id, @RequestBody Order newOrder) {
+		Optional<Order> optionalOrder = repository.findById(id);
+
+		if (optionalOrder.isPresent()) {
+			newOrder.setId(id);
+			repository.save(newOrder);
+
+			return new ResponseEntity<>(newOrder, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+	}
+
+	@PatchMapping(value = "/orders/{id}", consumes = {"application/json"})
+	public ResponseEntity<Order> patchEmployee(@PathVariable int id, @RequestBody Map<String, Object> fields) {
+		Optional<Order> optionalOrder = repository.findById(id);
+		if (optionalOrder.isPresent()) {
+			Order order = optionalOrder.get();
+			// Map key is field name, v is value
+			fields.forEach((k, v) -> {
+				// use reflection to get field k on manager and set it to value v
+				Field field = ReflectionUtils.findField(Order.class, k);
+				if (field != null) {
+					field.setAccessible(true);
+					ReflectionUtils.setField(field, order, v);
+				}
+
+			});
+			repository.save(order);
+			return new ResponseEntity<>(order, HttpStatus.OK);
+		}
+
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
 	}
 }
