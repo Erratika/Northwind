@@ -1,7 +1,7 @@
 package com.sparta.northwind.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.northwind.entities.Customer;
+import com.sparta.northwind.entities.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,22 +10,19 @@ import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CustomerControllerTest {
+class ProductControllerTest {
 
     @Test
-    void checkCustomerExists(){
+    void checkProductExists(){
         ObjectMapper mapper = new ObjectMapper();
         try {
-            Customer result = mapper.readValue(
-                    new URL("http://localhost:8080/customers/ALFKI"),Customer.class);
-            Assertions.assertNotEquals(0, result.getPhone());
+            Product result = mapper.readValue(new URL("http://localhost:8080/products/1"), Product.class);
+            Assertions.assertNotEquals(0, result.getProductName().length());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-      @Test
-    void extraDummyTest(){
-        Assertions.assertEquals(0,0);
+
+
     }
 
 }

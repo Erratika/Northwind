@@ -24,12 +24,12 @@ public class ShipperController {
 		Optional<Shipper> optionalShipper = repository.findById(id);
 		return optionalShipper.map(shipper -> new ResponseEntity<>(shipper, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
-	@DeleteMapping("/shippers/{id}")
+	@DeleteMapping("/shippers/delete/{id}")
 	public ResponseEntity<Shipper> deleteShipper(@PathVariable int id){
 		repository.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	@PostMapping("/shippers")
+	@PostMapping("/shippers/create")
 	public Shipper createShipper(@RequestBody Shipper shipper){
 		return repository.save(shipper);
 	}

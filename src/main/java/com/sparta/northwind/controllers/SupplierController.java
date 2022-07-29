@@ -24,12 +24,12 @@ public class SupplierController {
 		Optional<Supplier> optionalSupplier = repository.findById(id);
 		return optionalSupplier.map(supplier -> new ResponseEntity<>(supplier, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
-	@DeleteMapping("/suppliers/{id}")
+	@DeleteMapping("/suppliers/delete/{id}")
 	public ResponseEntity<Supplier> deleteSupplier(@PathVariable int id){
 		repository.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	@PostMapping("/suppliers")
+	@PostMapping("/suppliers/create")
 	public Supplier createSupplier(@RequestBody Supplier supplier){
 		return repository.save(supplier);
 	}

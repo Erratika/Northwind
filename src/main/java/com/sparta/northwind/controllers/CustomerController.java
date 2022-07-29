@@ -28,7 +28,7 @@ public class CustomerController {
 		Optional<Customer> optionalCustomer = repository.findById(id);
 		return optionalCustomer.map(customer -> new ResponseEntity<>(customer, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
-	@DeleteMapping("/customers/{id}")
+	@DeleteMapping("/customers/delete/{id}")
 	public ResponseEntity<Customer> deleteCustomer(@PathVariable String id){
 		if (repository.existsById(id)){
 			repository.deleteById(id);
@@ -38,7 +38,7 @@ public class CustomerController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	@PostMapping("/customers")
+	@PostMapping("/customers/create")
 	public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer){
 		return new ResponseEntity<>(repository.save(customer),HttpStatus.CREATED);	}
 	@PutMapping(value = "/customers/{id}", consumes = {"application/json"})

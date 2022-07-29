@@ -24,12 +24,12 @@ public class ProductController {
 		Optional<Product> optionalProduct = repository.findById(id);
 		return optionalProduct.map(product -> new ResponseEntity<>(product, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
-	@DeleteMapping("/products/{id}")
+	@DeleteMapping("/products/delete/{id}")
 	public ResponseEntity<Product> deleteProduct(@PathVariable int id){
 		repository.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-	@PostMapping("/products")
+	@PostMapping("/products/create")
 	public Product createProduct(@RequestBody Product product){
 		return repository.save(product);
 	}
